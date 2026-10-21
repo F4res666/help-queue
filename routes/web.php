@@ -10,5 +10,5 @@ Route::get('/hello', function () {
 });
 
 Route::get('/hello/{name}', function (string $name) {
-    return "Hello $name!";
+    return view('hello', ['name' => $name]);
 });
