@@ -38,3 +38,32 @@ The user controls the browser, so they can change the HTML (like I did with the 
 The delete form has two hidden fields:
 - `_token`: added by `@csrf`. It is the secret CSRF token, so Laravel knows the form really comes from this site.
 - `_method` with the value `DELETE`: added by `@method('DELETE')`. HTML forms can only send GET or POST, so the form is sent as POST and Laravel reads `_method` to treat it as a DELETE request, which matches the `tickets.destroy` route.
+
+
+
+## Exercise 7: routes before
+
+```
+  GET|HEAD   tickets ........... tickets.index › TicketController@index
+  POST       tickets ........... tickets.store › TicketController@store
+  GET|HEAD   tickets/create .. tickets.create › TicketController@create
+  GET|HEAD   tickets/{ticket} .... tickets.show › TicketController@show
+  DELETE     tickets/{ticket} tickets.destroy › TicketController@destr…
+```
+
+## Exercise 7: routes after
+
+```
+    GET|HEAD   tickets ........... tickets.index › TicketController@index
+    POST       tickets ........... tickets.store › TicketController@store
+    GET|HEAD   tickets/create .. tickets.create › TicketController@create
+    GET|HEAD   tickets/{ticket} .... tickets.show › TicketController@show
+    DELETE     tickets/{ticket} tickets.destroy › TicketController@destr…
+```
+
+
+## Question 8
+
+Nothing changed: the five routes have the same methods, URLs, names and controller methods as before, but now they are written in two lines instead of five. Route::resource works without any other change because my controller already follows Laravel's conventions: the methods are called index, create, store, show and destroy, the route names are tickets.index, tickets.create, etc., and the parameter is {ticket}, which matches `Ticket $ticket` in show() and destroy(). Route::resource creates exactly these routes automatically, and only() keeps the five I use (without edit and update).
+
+
