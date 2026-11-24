@@ -31,3 +31,10 @@ The name I typed is still in the field after the form is refused. This comes fro
 ## Question 6
 
 The user controls the browser, so they can change the HTML (like I did with the developer tools) or send a request without using the form at all. The limits in the form are only for display and can't be trusted. The server is the only place where the data can be checked for sure, here with `Rule::in(Ticket::TOPICS)` in the controller.
+
+
+## Question 7
+
+The delete form has two hidden fields:
+- `_token`: added by `@csrf`. It is the secret CSRF token, so Laravel knows the form really comes from this site.
+- `_method` with the value `DELETE`: added by `@method('DELETE')`. HTML forms can only send GET or POST, so the form is sent as POST and Laravel reads `_method` to treat it as a DELETE request, which matches the `tickets.destroy` route.
