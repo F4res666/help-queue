@@ -4,16 +4,20 @@
 
 @section('content')
     <h1>Help queue</h1>
-    <p>{{ $tickets->count() }} waiting</p>
 
-    @forelse ($tickets as $ticket)
-        <article class="ticket">
-            <strong>{{ $loop->iteration }}. {{ $ticket->name }}</strong>
-            <span class="topic">{{ $ticket->topic }}</span>
-            <p>{{ $ticket->description }}</p>
-            <a href="{{ route('tickets.show', $ticket) }}">Details</a>
-        </article>
+    <h2>Being helped</h2>
+    @forelse ($helping as $ticket)
+        @include('tickets._card', ['ticket' => $ticket])
+    @empty
+        <p>Nobody right now.</p>
+    @endforelse
+
+    <h2>Waiting ({{ $waiting->count() }})</h2>
+    @forelse ($waiting as $ticket)
+        @include('tickets._card', ['ticket' => $ticket, 'position' => $loop->iteration])
     @empty
         <p>Nobody is waiting.</p>
     @endforelse
+
+    <p>{{ $doneCount }} solved so far.</p>
 @endsection
