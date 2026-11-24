@@ -15,3 +15,19 @@ I got a 404 Not Found. Laravel checks routes from top to bottom and uses the fir
 ## Question 4
 
 Without `@csrf` I got the error 419 Page Expired. The token protects against CSRF attacks (Cross-Site Request Forgery): another website could make my browser send a form to this site without me knowing. `@csrf` adds a secret token to the form, and Laravel refuses any POST request that does not have the right token.
+
+
+
+## Exercise 5 results
+
+1. Empty form: "The name field is required." and "The topic field is required."
+2. Name but no topic: "The topic field is required." The name I typed stayed in the field.
+3. Topic changed to Cooking: "The selected topic is invalid."
+
+## Question 5
+
+The name I typed is still in the field after the form is refused. This comes from `value="{{ old('name') }}"` in create.blade.php: when validation fails, Laravel redirects back to the form with the old values, and `old('name')` puts the name back in the input.
+
+## Question 6
+
+The user controls the browser, so they can change the HTML (like I did with the developer tools) or send a request without using the form at all. The limits in the form are only for display and can't be trusted. The server is the only place where the data can be checked for sure, here with `Rule::in(Ticket::TOPICS)` in the controller.
