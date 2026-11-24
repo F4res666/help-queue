@@ -1,0 +1,3 @@
+## Question 1
+
+The server refused the value `sleeping`: the rule `Rule::in(Ticket::STATUSES)` only accepts waiting, helping and done, so validation failed with the error "The selected status is invalid." The status of the ticket did not change. On my page the message is not displayed, because show.blade.php has no `@error('status')` block, so Laravel only redirected back to the ticket page. When I clicked again, the page had reloaded with the normal value `helping`, so it worked.
