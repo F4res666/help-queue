@@ -67,3 +67,12 @@ The delete form has two hidden fields:
 Nothing changed: the five routes have the same methods, URLs, names and controller methods as before, but now they are written in two lines instead of five. Route::resource works without any other change because my controller already follows Laravel's conventions: the methods are called index, create, store, show and destroy, the route names are tickets.index, tickets.create, etc., and the parameter is {ticket}, which matches `Ticket $ticket` in show() and destroy(). Route::resource creates exactly these routes automatically, and only() keeps the five I use (without edit and update).
 
 
+
+
+## Final questions
+
+1. `/tickets/create` answered 404 because routes are checked from top to bottom. The `/tickets/{ticket}` route was above it and accepts any value, so Laravel treated `create` as a ticket id, found no ticket, and returned 404.
+
+2. `@csrf` protects against CSRF (Cross-Site Request Forgery), where another website makes my browser send a form to this site without me knowing. Without it, Laravel refuses the form with the error 419 Page Expired.
+
+3. The user controls the browser: they can change the HTML with the developer tools or send a request without the form. So the limits in the form can't be trusted, and only the server can check the data for sure (here with `Rule::in(Ticket::TOPICS)`).
