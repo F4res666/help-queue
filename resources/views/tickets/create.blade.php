@@ -6,7 +6,7 @@
     <h1>Ask for help</h1>
 
     <form method="POST" action="{{ route('tickets.store') }}">
-        @csrf
+                @csrf
 
         <p>
             <label for="name">Your name</label><br>
