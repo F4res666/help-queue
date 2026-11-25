@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class TicketController extends Controller
 {
-        public function index()
+    public function index()
     {
         return view('tickets.index', [
-            'helping' => Ticket::helping()->get(),
-            'waiting' => Ticket::waiting()->get(),
+            'helping' => Ticket::with('topic')->helping()->get(),
+            'waiting' => Ticket::with('topic')->waiting()->get(),
             'doneCount' => Ticket::where('status', 'done')->count(),
         ]);
     }
 
-        public function show(Ticket $ticket)
+    public function show(Ticket $ticket)
     {
         $ahead = Ticket::waiting()->where('id', '<', $ticket->id)->count();
 
@@ -26,14 +27,14 @@ class TicketController extends Controller
 
     public function create()
     {
-        return view('tickets.create', ['topics' => Ticket::TOPICS]);
+        return view('tickets.create', ['topics' => Topic::orderBy('name')->get()]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'topic' => ['required', Rule::in(Ticket::TOPICS)],
+            'topic_id' => ['required', 'exists:topics,id'],
             'description' => ['nullable', 'string', 'max:500'],
         ]);
 
@@ -41,8 +42,6 @@ class TicketController extends Controller
 
         return redirect()->route('tickets.index')->with('message', 'You are in the queue!');
     }
-
-
 
     public function update(Request $request, Ticket $ticket)
     {
@@ -55,7 +54,6 @@ class TicketController extends Controller
 
         return redirect()->route('tickets.show', $ticket)->with('message', 'Status updated.');
     }
-
 
     public function destroy(Ticket $ticket)
     {

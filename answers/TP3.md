@@ -20,3 +20,12 @@ My ticket page says 3 people ahead of me. In the queue, the Waiting section show
 ## Question 4
 
 The badges now show JSON, like {"id":3,"name":"Blade","created_at":"...","updated_at":"..."}, instead of just the name. The `topic` text column no longer exists, so `$ticket->topic` now calls the `topic()` relationship and returns the whole Topic object. When Blade prints an object with {{ }}, Laravel turns it into JSON. To show only the name, the views must use `$ticket->topic->name` (exercise 5).
+
+
+
+## Question 5
+
+I got the message "The selected topic id is invalid." under the topic field. It comes from the rule `exists:topics,id` in store(): Laravel looks in the topics table for a row with id 99, does not find one, and refuses the form.
+
+
+
