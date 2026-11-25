@@ -9,13 +9,24 @@ use Illuminate\Validation\Rule;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $topic = $request->query('topic');
+
+        $helping = Ticket::with('topic')->helping();
+        $waiting = Ticket::with('topic')->waiting();
+
+        if ($topic) {
+            $helping->whereRelation('topic', 'name', $topic);
+            $waiting->whereRelation('topic', 'name', $topic);
+        }
+
         return view('tickets.index', [
-            'helping' => Ticket::with('topic')->helping()->get(),
-            'waiting' => Ticket::with('topic')->waiting()->get(),
+            'helping' => $helping->get(),
+            'waiting' => $waiting->get(),
             'doneCount' => Ticket::where('status', 'done')->count(),
             'topics' => Topic::withCount('tickets')->orderBy('name')->get(),
+            'currentTopic' => $topic,
         ]);
     }
 

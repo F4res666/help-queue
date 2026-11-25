@@ -76,3 +76,11 @@ Nothing changed: the five routes have the same methods, URLs, names and controll
 2. `@csrf` protects against CSRF (Cross-Site Request Forgery), where another website makes my browser send a form to this site without me knowing. Without it, Laravel refuses the form with the error 419 Page Expired.
 
 3. The user controls the browser: they can change the HTML with the developer tools or send a request without the form. So the limits in the form can't be trusted, and only the server can check the data for sure (here with `Rule::in(Ticket::TOPICS)`).
+
+
+
+
+
+## Bonus
+
+`/tickets?topic=Git` shows only the Git tickets. In `index()`, `$request->query('topic')` reads the value after `?topic=`. When it is present, `whereRelation('topic', 'name', $topic)` keeps only the tickets whose related topic has that name, for both the "Being helped" and "Waiting" lists. Above the list, one link per topic is built with `route('tickets.index', ['topic' => $topic->name])`, plus an "All" link, and the active filter is shown in brackets. Since TP3 the topic is a related table, so the filter goes through the `topic` relationship instead of a text column.

@@ -13,6 +13,20 @@
         @endforeach
     </p>
 
+
+
+
+    <p>
+        Filter:
+        <a href="{{ route('tickets.index') }}">{{ $currentTopic ? 'All' : '[All]' }}</a>
+        @foreach ($topics as $topic)
+            ·
+            <a href="{{ route('tickets.index', ['topic' => $topic->name]) }}">{{ $currentTopic === $topic->name ? '[' . $topic->name . ']' : $topic->name }}</a>
+        @endforeach
+    </p>
+
+
+
     <h2>Being helped</h2>
     @forelse ($helping as $ticket)
         @include('tickets._card', ['ticket' => $ticket])
