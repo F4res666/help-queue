@@ -42,3 +42,9 @@ The list contains 10 items: the waiting tickets only, the same number as in the 
 Each item has a `topic` object with the fields id, name, created_at and updated_at. It is there because of `with('topic')`.
 
 Another program could use this data, for example a mobile app, a screen in the classroom that shows who is next, or a script in Python. JSON is a standard format that almost every language can read.
+
+
+
+## Question 8
+
+I could not swap with a neighbour yet, so I cloned my own repository into a new folder and followed my README. The first time, I ran `composer run dev` directly after cloning and got the error "Failed opening required vendor/autoload.php", because the vendor folder is not in Git: `composer install` creates it. After running all the README steps in order (composer install, npm install, copying .env, key:generate, migrate --seed answering yes), the project started and showed the queue with 8 tickets.
