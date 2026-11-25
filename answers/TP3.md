@@ -10,3 +10,8 @@ The server refused the value `sleeping`: the rule `Rule::in(Ticket::STATUSES)` o
 select * from "tickets" where "status" = ? order by "id" asc
 
 The scope builds a query that selects the tickets whose status is "waiting", ordered by id. The `?` is a placeholder: Laravel sends the value 'waiting' separately, which protects against SQL injection.
+
+
+## Question 3
+
+My ticket page says X people ahead of me. In the queue, the Waiting section shows N tickets and mine is number N, so there are N - 1 = X people before me: the numbers match. The tickets being helped and the done ones are not counted, because `$ahead` uses the `waiting()` scope.
