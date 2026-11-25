@@ -48,3 +48,15 @@ Another program could use this data, for example a mobile app, a screen in the c
 ## Question 8
 
 I could not swap with a neighbour yet, so I cloned my own repository into a new folder and followed my README. The first time, I ran `composer run dev` directly after cloning and got the error "Failed opening required vendor/autoload.php", because the vendor folder is not in Git: `composer install` creates it. After running all the README steps in order (composer install, npm install, copying .env, key:generate, migrate --seed answering yes), the project started and showed the queue with 8 tickets.
+
+
+
+
+
+## Final questions
+
+1. `Ticket::waiting()` selects the tickets whose status is "waiting", ordered by id. A scope is better than repeating the `where` because the rule is written in one place, in the model: the queue, the ticket page (people ahead) and `/queue.json` all use it, so if the rule changes I only change it once, and the code is easier to read.
+
+2. The `topic_id` column is in the `tickets` table. A ticket belongs to one topic, but a topic has many tickets. Each ticket can store the one id of its topic, while a topic could not store a list of many ticket ids in a single column. So the foreign key always goes on the "many" side (belongsTo).
+
+3. Besides a browser, `/queue.json` could be used by a mobile app, a screen in the classroom that shows who is next, a JavaScript front end, a script in Python, or a bot (for example on Discord) that announces the next person.
