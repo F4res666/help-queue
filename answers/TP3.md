@@ -29,3 +29,6 @@ I got the message "The selected topic id is invalid." under the topic field. It 
 
 
 
+## Question 6
+
+I clicked the "Git" badge and the page /topics/1 shows 2 tickets. The TopicController gets them with `$topic->tickets()`, the hasMany relationship of the Topic model, which selects the tickets whose topic_id is the id of this topic. This count includes all statuses (waiting, helping and done).
