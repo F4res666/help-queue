@@ -60,3 +60,13 @@ I could not swap with a neighbour yet, so I cloned my own repository into a new 
 2. The `topic_id` column is in the `tickets` table. A ticket belongs to one topic, but a topic has many tickets. Each ticket can store the one id of its topic, while a topic could not store a list of many ticket ids in a single column. So the foreign key always goes on the "many" side (belongsTo).
 
 3. Besides a browser, `/queue.json` could be used by a mobile app, a screen in the classroom that shows who is next, a JavaScript front end, a script in Python, or a bot (for example on Discord) that announces the next person.
+
+
+
+
+
+## Bonus
+
+1. I passed a third argument to `validate()`: `['topic_id' => 'topic']`. It gives the field a friendly name, so the error now says "The topic field is required." instead of "The topic id field is required."
+
+2. In `index()` I added `Topic::withCount('tickets')`, which counts the tickets of each topic in the same query and stores the result in `tickets_count`. The queue page shows each topic with its number of tickets, as a link to the topic page.
