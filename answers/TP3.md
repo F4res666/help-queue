@@ -32,3 +32,13 @@ I got the message "The selected topic id is invalid." under the topic field. It 
 ## Question 6
 
 I clicked the "Git" badge and the page /topics/1 shows 2 tickets. The TopicController gets them with `$topic->tickets()`, the hasMany relationship of the Topic model, which selects the tickets whose topic_id is the id of this topic. This count includes all statuses (waiting, helping and done).
+
+
+
+## Question 7
+
+The list contains 10 items: the waiting tickets only, the same number as in the Waiting section of the queue, because the route uses the `waiting()` scope.
+
+Each item has a `topic` object with the fields id, name, created_at and updated_at. It is there because of `with('topic')`.
+
+Another program could use this data, for example a mobile app, a screen in the classroom that shows who is next, or a script in Python. JSON is a standard format that almost every language can read.
